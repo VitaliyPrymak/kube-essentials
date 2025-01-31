@@ -21,6 +21,22 @@ spec:
                 export TIMESTAMP=$(date +"%Y%m%d%H%M%S") && \
                 export PGPASSWORD=$POSTGRES_PASSWORD && \
                 pg_dump -h $POSTGRES_SERVER -U $POSTGRES_USER -f /backups/backup-$TIMESTAMP.sql
+            env:
+              - name: POSTGRES_USER
+                valueFrom:
+                  secretKeyRef:
+                    name: postgres-credentials
+                    key: POSTGRES_USER
+              - name: POSTGRES_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: postgres-credentials
+                    key: POSTGRES_PASSWORD
+              - name: POSTGRES_SERVER
+                valueFrom:
+                  secretKeyRef:
+                    name: postgres-credentials
+                    key: POSTGRES_SERVER
             volumeMounts:
               - mountPath: /backups
                 name: backup-storage
