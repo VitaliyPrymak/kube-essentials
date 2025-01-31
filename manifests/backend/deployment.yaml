@@ -14,6 +14,23 @@ spec:
         app: backend
     spec:
       nodeSelector:
+      initContainers:
+      - name: wait-for-db
+        image: cgr.dev/chainguard/wait-for-it
+        args: ["postgres-postgresql:5432", "--timeout=60"]
+      
+      - name: db-migrations
+        image: backend:0.7.1
+        command: ["/bin/sh", "-c"]
+        args:
+          - |
+            python app/backend_pre_start.py && \
+            alembic upgrade head && \
+            python app/initial_data.py
+        envFrom:
+        - secretRef:
+            name: backend-secrets
+      
       containers:
       - name: backend
         image: backend:0.7.1
