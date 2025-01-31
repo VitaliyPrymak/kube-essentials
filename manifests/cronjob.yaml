@@ -25,17 +25,17 @@ spec:
               - name: POSTGRES_USER
                 valueFrom:
                   secretKeyRef:
-                    name: postgres-credentials
+                    name: backend-secrets
                     key: POSTGRES_USER
               - name: POSTGRES_PASSWORD
                 valueFrom:
                   secretKeyRef:
-                    name: postgres-credentials
+                    name: backend-secrets
                     key: POSTGRES_PASSWORD
               - name: POSTGRES_SERVER
                 valueFrom:
                   secretKeyRef:
-                    name: postgres-credentials
+                    name: backend-secrets
                     key: POSTGRES_SERVER
             volumeMounts:
               - mountPath: /backups
