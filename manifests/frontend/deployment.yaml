@@ -13,15 +13,6 @@ spec:
       labels:
         app: frontend
     spec:
-      
-      tolerations:
-        - key: "node-role.kubernetes.io/control-plane"
-          operator: "Exists"
-          effect: "NoExecute"
-          tolerationSeconds: 300
-        - key: "postgres-only"
-          operator: "Exists"
-          effect: "NoSchedule"
       containers:
       - name: frontend
         image: frontend:0.7.1
